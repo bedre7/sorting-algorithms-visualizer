@@ -1,0 +1,50 @@
+@import "../sass/base.scss";
+
+.controls {
+  display: grid;
+  row-gap: 1rem;
+  column-gap: 6rem;
+  font-size: 2rem;
+
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 35vw));
+  // grid-template-rows: repeat(auto-fit, 1fr);
+
+  .dropdown {
+    label {
+      margin-right: 2rem;
+    }
+    select {
+      width: 80%;
+      height: 90%;
+      font-size: inherit;
+      border-radius: 5px;
+      background-color: #6aa5ab;
+      outline: none;
+      cursor: pointer;
+    }
+  }
+  .buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    .button {
+      padding: 1.5rem 4rem;
+      width: 40%;
+      font-family: inherit;
+      font-size: inherit;
+      border-radius: 5px;
+      outline: none;
+      border: none;
+      background-color: #6aa5ab;
+      color: white;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover,
+      &:active {
+        background-color: #2e9da9;
+      }
+    }
+  }
+}

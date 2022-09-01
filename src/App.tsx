@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="App">
       <MainHeader />
-      <SortingGraph />
+      <SortingGraph arraySize={15}/>
       <Controls />
     </div>
   );

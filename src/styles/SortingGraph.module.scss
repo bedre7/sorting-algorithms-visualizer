@@ -1,0 +1,12 @@
+.graph{
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    height: 60vh;
+    
+    .bar{
+        background-color: aqua;
+        border-radius: 4px;
+        transition: all .2s;
+    }
+}
