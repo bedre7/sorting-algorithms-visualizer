@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC } from "react";
+import React, { FC } from "react";
 import styles from "../styles/RangeSlider.module.scss";
 
 interface IProps {
@@ -8,10 +8,13 @@ interface IProps {
   max: number;
   onChange: (event: any) => void;
 }
+
 const RangeSlider: FC<IProps> = (props) => {
   return (
     <div className={styles.rangebar}>
-      <label>{props.name} :  {props.value}</label>
+      <label>
+        {props.name} : {props.value}
+      </label>
       <input
         type="range"
         step="5"

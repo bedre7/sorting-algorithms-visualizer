@@ -1,0 +1,20 @@
+.dropdown {
+  label {
+    margin-right: 2rem;
+  }
+  select {
+    width: 80%;
+    height: 90%;
+    font-size: inherit;
+    font-family: inherit;
+    border-radius: 5px;
+    background-color: #2e9da9;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background-color: #007380;
+    }
+  }
+}

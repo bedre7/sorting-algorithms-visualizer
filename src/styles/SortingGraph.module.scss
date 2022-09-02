@@ -1,12 +1,30 @@
-.graph{
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-around;
-    height: 60vh;
-    
-    .bar{
-        background-color: aqua;
-        border-radius: 4px;
-        transition: all .2s;
-    }
+.graph {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  height: 60vh;
+  animation: drift 0.5s linear;
+
+  .bar {
+    border-radius: 4px;
+  }
+  @media only screen and (max-width: 600px) {
+    margin-top: 2rem;
+    height: 70%;
+  }
+}
+
+@keyframes drift {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  80% {
+    opacity: 0.8;
+    transform: translateX(10%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
 }

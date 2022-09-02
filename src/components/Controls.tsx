@@ -1,58 +1,59 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { FC } from "react";
 import styles from "../styles/Controls.module.scss";
 import { NUMBERS_RANGE } from "../DefaultValues";
 import RangeSlider from "./RangeSlider";
+import DropDown from "./DropDown";
 
-const SORTBY = {
-  BUBBLE_SORT: "Bubble Sort",
-  INSERTION_SORT: "Insertion Sort",
-  HEAP_SORT: "Heap Sort",
-  MERGE_SORT: "Merge Sort",
-  QUICK_SORT: "Quick Sort",
-};
+interface IProps {
+  onDropdownChange: (sortBy: string) => void;
+  arrayRandomizeHandler: () => void;
+  arraySize: number;
+  isSorting: boolean;
+  sortBy: string;
+  sortingSpeed: number;
+  onSort: () => void;
+  onSizeChange: (size: number) => void;
+  onSpeedChange: (speed: number) => void;
+}
 
-const Controls = () => {
-  const [arraySize, setArraySize] = useState(0);
-  const [sortingSpeed, setSortingSpeed] = useState(0);
-
-  const changeHandler = (event: any) => {
-    if (event.target.name == "Size") {
-      setArraySize(event.target.value || 0);
-    } else if (event.target.name == "Speed") {
-      setSortingSpeed(event.target.value || 0);
+const Controls: FC<IProps> = (props) => {
+  const rangeChangeHandler = (event: any) => {
+    if (event.target.name === "Size") {
+      props.onSizeChange(event.target.value);
+    } else if (event.target.name === "Speed") {
+      props.onSpeedChange(event.target.value);
     }
   };
 
   return (
-    <div className={styles.controls}>
+    <div
+      className={`${styles.controls} ${
+        props.isSorting ? styles.drop : styles.rise
+      }`}
+    >
       <RangeSlider
-        value={arraySize}
+        value={props.arraySize}
         name="Size"
         min={NUMBERS_RANGE.MIN}
         max={NUMBERS_RANGE.MAX}
-        onChange={changeHandler}
+        onChange={rangeChangeHandler}
       />
       <RangeSlider
-        value={sortingSpeed}
+        value={props.sortingSpeed}
         name="Speed"
         min={NUMBERS_RANGE.MIN}
         max={NUMBERS_RANGE.MAX}
-        onChange={changeHandler}
+        onChange={rangeChangeHandler}
       />
 
-      <div className={styles.dropdown}>
-        <label>Sort By</label>
-        <select name="sortby" id="sortby">
-          <option value="bubble">{SORTBY.BUBBLE_SORT}</option>
-          <option value="insertion">{SORTBY.INSERTION_SORT}</option>
-          <option value="heap">{SORTBY.HEAP_SORT}</option>
-          <option value="merge">{SORTBY.MERGE_SORT}</option>
-          <option value="quick">{SORTBY.QUICK_SORT}</option>
-        </select>
-      </div>
+      <DropDown value={props.sortBy} onChange={props.onDropdownChange} />
       <div className={styles.buttons}>
-        <button className={styles.button}>Sort</button>
-        <button className={styles.button}>Randomize</button>
+        <button className={styles.button} onClick={props.onSort}>
+          Sort
+        </button>
+        <button className={styles.button} onClick={props.arrayRandomizeHandler}>
+          Randomize
+        </button>
       </div>
     </div>
   );

@@ -1,41 +1,47 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import styles from "../styles/SortingGraph.module.scss";
-import {
-  NUMBERS_RANGE,
-  DEFAULT_ARRAY,
-  DEFAULT_HEIGHT,
-  DEFAULT_WIDTH,
-} from "../DefaultValues";
+import { DEFAULT_HEIGHT, DEFAULT_WIDTH } from "../DefaultValues";
 
-const SortingGraph: FC<{ arraySize: number }> = (props) => {
-  const [array, setArray] = useState<number[]>(DEFAULT_ARRAY);
-  const [maxValue, setMaxValue] = useState(Number.MIN_VALUE);
+interface IProps {
+  arraySize: number;
+  array: number[];
+  maxValue: number;
+  isSorting: boolean;
+  swappedBars: { left?: number; right?: number };
+}
+
+const SortingGraph: FC<IProps> = ({
+  arraySize,
+  array,
+  maxValue,
+  swappedBars,
+  isSorting,
+}) => {
   const [graphHeight, setGraphHeight] = useState(DEFAULT_HEIGHT);
   const [graphWidth, setGraphWidth] = useState(DEFAULT_WIDTH);
 
   const graphRef = useRef<HTMLDivElement>(null);
 
-  const randomInt = (max: number, min: number) =>
-    Math.round(Math.random() * (max - min)) + min;
-
-  const createRandomArray = (size: number) => {
-    let maxValue = Number.MIN_VALUE;
-    let randomArray = [];
-
-    for (let i = 0; i < size; i++) {
-      let randNum = randomInt(NUMBERS_RANGE.MIN, NUMBERS_RANGE.MAX);
-      randomArray.push(randNum);
-      maxValue = Math.max(maxValue, randNum);
-    }
-    setMaxValue(maxValue);
-    return randomArray;
+  const handleSizeChange = () => {
+    setGraphWidth(graphRef.current?.clientWidth || DEFAULT_WIDTH);
   };
 
   useEffect(() => {
     setGraphHeight(graphRef.current?.clientHeight || DEFAULT_HEIGHT);
     setGraphWidth(graphRef.current?.clientWidth || DEFAULT_WIDTH);
-    setArray(createRandomArray(props.arraySize));
+
+    window.addEventListener("resize", handleSizeChange);
+    return () => {
+      window.removeEventListener("resize", handleSizeChange);
+    };
   }, []);
+
+  const getColorStyle = (index: number) => {
+    if (!isSorting) return "aqua";
+    if (swappedBars.left === index) return "#ff4953";
+    else if (swappedBars.right === index) return "#656f7b";
+    return "aqua";
+  };
 
   return (
     <div className={styles.graph} ref={graphRef}>
@@ -45,16 +51,15 @@ const SortingGraph: FC<{ arraySize: number }> = (props) => {
             key={index}
             className={styles.bar}
             style={{
-              height: `${((num / maxValue) * graphHeight)}px`,
-              width: `${(graphWidth / props.arraySize - 5)}px`,
+              height: `${(num / maxValue) * graphHeight}px`,
+              width: `${graphWidth / arraySize - 5}px`,
+              backgroundColor: `${getColorStyle(index)}`,
             }}
-          >
-            {num}
-          </div>
+          ></div>
         );
       })}
     </div>
   );
 };
 
-export default React.memo(SortingGraph);
+export default SortingGraph;
