@@ -12,7 +12,7 @@
 
 ## 🧱 Built With
 
-- React js <br>
+- React with Typescript <br>
 - Vanilla CSS/SASS
 
 ## ⚙️ Installation and setup instructions
