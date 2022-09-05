@@ -4,7 +4,7 @@
 
 <br>
 
-![App Demo](./src/demo.gif)
+![App Demo](./src/demo.mp4)
 
 ## 📝 About
 
